@@ -324,7 +324,7 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
                     🪳 {delegateTitle}
                   </p>
                   <p className={`font-bold ${themeStyles.text}`}>
-                    cockroachsabha.com
+                    cockroach-sabha.vercel.app
                   </p>
                 </div>
 
