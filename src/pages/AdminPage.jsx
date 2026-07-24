@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, CheckCircle, XCircle, Trash2, Ban, RefreshCw } from 'lucide-react';
+import { ShieldAlert, CheckCircle, XCircle, Trash2, Ban, RefreshCw, BarChart3 } from 'lucide-react';
 import { toast } from 'sonner';
 import ErrorState from '../components/ErrorState';
 
 export default function AdminPage() {
-  const { isAdmin } = useAuth();
-  const [activeTab, setActiveTab] = useState('pending'); // 'dashboard', 'pending', 'reports', 'users'
+  const { isAdmin, token } = useAuth();
+  const [activeTab, setActiveTab] = useState('pending'); // 'dashboard', 'pending', 'reports', 'users', 'stats'
   const [pendingPosts, setPendingPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [reports, setReports] = useState([]);
   const [users, setUsers] = useState([]);
+  const [stats, setStats] = useState(null);
   const [error, setError] = useState(null);
+
+  const fetchStats = async () => {
+    try {
+      const res = await fetch('/api/admin/stats', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setStats(await res.json());
+      }
+    } catch (err) {
+      console.error('Failed to load stats', err);
+    }
+  };
 
   const fetchAdminData = async () => {
     setError(null);
@@ -27,6 +41,8 @@ export default function AdminPage() {
       if (allRes.ok) setAllPosts(await allRes.json());
       if (reportsRes.ok) setReports(await reportsRes.json());
       if (usersRes.ok) setUsers(await usersRes.json());
+      
+      await fetchStats();
     } catch (err) {
       setError("Failed to load Speaker's Office records. Connection error.");
       toast.error('Failed to load Speaker\'s Office data');
@@ -140,6 +156,12 @@ export default function AdminPage() {
           className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'users' ? 'bg-primary text-background' : 'text-secondary hover:text-primary'}`}
         >
           Delegates ({users.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('stats')}
+          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'stats' ? 'bg-primary text-background' : 'text-secondary hover:text-primary'}`}
+        >
+          System Stats
         </button>
       </div>
 
@@ -259,6 +281,45 @@ export default function AdminPage() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* SYSTEM STATS TAB */}
+      {activeTab === 'stats' && (
+        <div className="space-y-6">
+          {/* Top Metrics Cards Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-card border border-border rounded-[16px] p-6 space-y-2 shadow-sm text-center">
+              <span className="text-[10px] font-mono text-muted uppercase font-bold tracking-wider">Total API Requests</span>
+              <p className="text-3xl font-black text-primary">{stats?.totalApiCalls ?? 0}</p>
+            </div>
+            <div className="bg-card border border-border rounded-[16px] p-6 space-y-2 shadow-sm text-center">
+              <span className="text-[10px] font-mono text-muted uppercase font-bold tracking-wider">Unique Visitors</span>
+              <p className="text-3xl font-black text-bronze">{stats?.uniqueVisitors ?? 0}</p>
+            </div>
+          </div>
+
+          {/* API Endpoints Hits breakdown list */}
+          <div className="bg-card border border-border rounded-[16px] p-6 space-y-4 shadow-sm">
+            <div className="flex items-center gap-2 border-b border-border pb-3">
+              <BarChart3 size={18} className="text-bronze" />
+              <h3 className="font-extrabold text-sm uppercase text-primary tracking-wider">API Endpoint Breakdown</h3>
+            </div>
+            {!stats || !stats.apiCallsByPath || stats.apiCallsByPath.length === 0 ? (
+              <p className="text-xs text-muted text-center py-4">No API traffic recorded yet.</p>
+            ) : (
+              <div className="divide-y divide-border max-h-96 overflow-y-auto pr-1">
+                {stats.apiCallsByPath.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center py-3 text-xs font-mono">
+                    <span className="text-secondary truncate max-w-md select-all">{item.path}</span>
+                    <span className="font-bold text-primary bg-background border border-border px-2.5 py-1 rounded-[6px] shrink-0">
+                      {item.count} hits
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
