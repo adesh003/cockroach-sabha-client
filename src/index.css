@@ -42,3 +42,24 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-secondary);
 }
+
+/* Infinite Marquee Scrolling Animation */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 25s linear infinite !important;
+}
+
+.bg-grid-pattern {
+  background-image: radial-gradient(var(--color-border) 1px, transparent 0);
+  background-size: 24px 24px;
+}

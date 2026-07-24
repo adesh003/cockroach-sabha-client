@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation, NavLink, useNavigate } from 'react-router-dom';
-import { Building2, ShieldAlert, PlusCircle, LogIn, LogOut, Flame, ScrollText, User, Sparkles, FileText, CheckCircle, TrendingUp, Users, Share2, Award } from 'lucide-react';
+import { Building2, ShieldAlert, PlusCircle, LogIn, LogOut, Flame, ScrollText, User, Sparkles, FileText, CheckCircle, TrendingUp, Users, Share2, Award, Lock } from 'lucide-react';
 import { categories } from '../constants/categories';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import CreateGazetteModal from '../components/CreateGazetteModal';
+import AuthModal from '../components/AuthModal';
 
 export default function Layout({ children, onOpenCreatePost, selectedCategory, onSelectCategory }) {
   const { user, logout, isAdmin } = useAuth();
@@ -13,6 +14,7 @@ export default function Layout({ children, onOpenCreatePost, selectedCategory, o
   const location = useLocation();
 
   const [isGazetteStudioOpen, setIsGazetteStudioOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const isFeedPage = location.pathname === '/feed' || location.pathname.startsWith('/posts/') || location.pathname === '/profile' || location.pathname === '/admin';
 
@@ -292,27 +294,60 @@ export default function Layout({ children, onOpenCreatePost, selectedCategory, o
       ) : (
         /* IF ON LANDING PAGE: LUXURY LIQUID GLASS TOP NAVIGATION HEADER */
         <div className="w-full min-h-screen">
-          <header className="border-b border-bronze/30 bg-background/70 backdrop-blur-xl sticky top-0 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.05)] transition-colors duration-200">
-            <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-              <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/')}>
-                <div className="w-10 h-10 rounded-xl bg-card/80 backdrop-blur-md border-2 border-bronze text-bronze font-black flex items-center justify-center text-xl shadow-[0_0_20px_rgba(154,107,50,0.35)] group-hover:scale-105 transition">
+          <header className="border-b border-border/60 bg-background/85 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
+              
+              {/* BRAND LOGO */}
+              <div className="flex items-center gap-3.5 cursor-pointer group" onClick={() => navigate('/')}>
+                <div className="w-10 h-10 rounded-2xl bg-card border-2 border-bronze/60 text-bronze font-black flex items-center justify-center text-xl shadow-sm group-hover:border-bronze group-hover:scale-105 transition-all duration-200">
                   🪳
                 </div>
-                <div>
-                  <span className="font-black text-lg tracking-tight text-primary block leading-none">COCKROACH SABHA</span>
-                  <span className="text-[9px] text-bronze font-mono uppercase tracking-widest block font-bold">Underground Parliament</span>
+                <div className="text-left space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-base sm:text-lg tracking-tight text-primary block leading-none font-sans uppercase">COCKROACH SABHA</span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  </div>
+                  <span className="text-[10px] text-bronze font-mono uppercase tracking-widest block font-bold">Underground Student Assembly</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              {/* ACTION PILLS */}
+              <div className="flex items-center gap-2.5 sm:gap-3.5">
+                <a
+                  href="https://x.com/CEO_chintu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden lg:inline-flex items-center gap-1.5 text-xs font-black text-secondary hover:text-primary transition bg-card border border-border px-3.5 py-2.5 rounded-[12px] hover:border-bronze/50 shadow-sm"
+                >
+                  <span className="text-[11px] font-bold">𝕏</span>
+                  <span>@CEO_chintu</span>
+                </a>
+
+                <a
+                  href="#gazette-creator"
+                  className="hidden sm:inline-flex items-center gap-1.5 text-xs font-black text-red-500 hover:text-red-600 px-3.5 py-2.5 border border-red-500/25 rounded-[12px] bg-red-500/5 hover:bg-red-500/10 transition"
+                >
+                  <Flame size={13} className="animate-pulse" />
+                  <span>Protest Studio</span>
+                </a>
+
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="hidden md:inline-flex items-center gap-1.5 text-xs font-black text-bronze hover:text-primary bg-card border border-bronze/40 px-4 py-2.5 rounded-[12px] hover:border-bronze transition shadow-sm"
+                >
+                  <Lock size={13} />
+                  <span>{user ? 'Delegate ID' : '🔑 Create Delegate ID'}</span>
+                </button>
 
                 <button
                   onClick={() => navigate('/feed')}
-                  className="bg-primary hover:bg-primary/90 text-background font-black text-xs px-5 py-2.5 rounded-[10px] backdrop-blur-md transition border-2 border-bronze shadow-md hover:scale-[1.02]"
+                  className="bg-primary hover:bg-primary/95 text-background font-black text-xs px-5 py-2.5 rounded-[12px] transition border border-bronze/50 shadow-md hover:-translate-y-0.5 active:translate-y-0 duration-200 flex items-center gap-2 uppercase tracking-wider"
                 >
-                  Enter Sabha Floor →
+                  <span>Enter Floor</span>
+                  <span className="text-sm">→</span>
                 </button>
               </div>
+
             </div>
           </header>
 
@@ -387,6 +422,12 @@ export default function Layout({ children, onOpenCreatePost, selectedCategory, o
       <CreateGazetteModal
         isOpen={isGazetteStudioOpen}
         onClose={() => setIsGazetteStudioOpen(false)}
+      />
+
+      {/* AUTHENTICATION PORTAL MODAL */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
     </div>
   );

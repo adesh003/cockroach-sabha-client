@@ -151,13 +151,13 @@ export default function AuthPage() {
           forgotStep === 'request' ? (
             <form onSubmit={handleForgotRequest} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address</label>
+                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address or Phone Number</label>
                 <div className="relative">
                   <input
-                    type="email"
+                    type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="delegate@parliament.in"
+                    placeholder="delegate@parliament.in or +919876543210"
                     required
                     className="w-full bg-background border border-border rounded-[10px] p-2.5 pl-9 text-xs text-primary placeholder-muted focus:outline-none focus:border-bronze"
                   />
@@ -185,10 +185,10 @@ export default function AuthPage() {
           ) : (
             <form onSubmit={handleForgotSubmit} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address</label>
+                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address or Phone Number</label>
                 <div className="relative">
                   <input
-                    type="email"
+                    type="text"
                     value={email}
                     disabled
                     className="w-full bg-background/50 border border-border rounded-[10px] p-2.5 pl-9 text-xs text-secondary cursor-not-allowed focus:outline-none"
@@ -248,13 +248,13 @@ export default function AuthPage() {
         ) : (
           <form onSubmit={handleAuth} className="space-y-4">
             <div>
-              <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address</label>
+              <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address or Phone Number</label>
               <div className="relative">
                 <input
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="delegate@parliament.in"
+                  placeholder="delegate@parliament.in or +919876543210"
                   required
                   className="w-full bg-background border border-border rounded-[10px] p-2.5 pl-9 text-xs text-primary placeholder-muted focus:outline-none focus:border-bronze"
                 />

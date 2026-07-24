@@ -9,12 +9,11 @@ export const categories = [
 ];
 
 export const gazettePetitionTypes = [
-  "📜 Resignation Petition of Education Minister",
-  "📜 Resignation Petition of Home Minister",
+  "📜 Resignation of Education Minister Dharmendra Pradhan",
+  "📜 Complete Overhaul & Dismantling of NTA (National Testing Agency)",
+  "📜 CJP Chalo Sansad Petition: Re-conduct NEET-UG under Judicial Probe",
+  "📜 Fast-Track Prosecution of Paper Leak Mafia & Officials",
   "📜 Official UPSC Exam Cancellation Motion",
-  "📜 Immediate Tax Relief & Youth Rebate Motion",
-  "📜 Public Demand for NEET / NTA Examination Probe",
-  "📜 National Highway & Pothole Repair Warrant",
   "📜 Student Campus Free Speech Protection Warrant",
   "✍ Custom Citizen Petition / Freeform Gazette Motion"
 ];
