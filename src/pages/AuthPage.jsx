@@ -38,7 +38,11 @@ export default function AuthPage() {
         setShowRecoveryModal(true);
       } else {
         toast.success(`Welcome Back Delegate ${res.user.anonymousName}!`);
-        navigate('/feed');
+        if (res.user?.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/feed');
+        }
       }
     } else {
       toast.error(res.error || 'Authentication failed');

@@ -16,7 +16,47 @@ export default function Layout({ children, onOpenCreatePost, selectedCategory, o
   const [isGazetteStudioOpen, setIsGazetteStudioOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  const isFeedPage = location.pathname === '/feed' || location.pathname.startsWith('/posts/') || location.pathname === '/profile' || location.pathname === '/admin';
+  const isAdminPage = location.pathname === '/admin';
+  const isFeedPage = (location.pathname === '/feed' || location.pathname.startsWith('/posts/') || location.pathname === '/profile') && !isAdminPage;
+
+  if (isAdminPage) {
+    return (
+      <div className="min-h-screen w-full bg-background text-primary selection:bg-red-500 selection:text-white">
+        <header className="border-b border-red-500/30 bg-background/90 backdrop-blur-md sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+              <div className="w-9 h-9 rounded-xl bg-card border-2 border-red-500 text-red-500 font-black flex items-center justify-center text-lg shadow-sm">
+                🪳
+              </div>
+              <div className="text-left">
+                <span className="font-black text-sm uppercase text-primary block leading-none">SPEAKER'S OFFICE</span>
+                <span className="text-[9px] text-red-500 font-mono font-bold uppercase tracking-widest block mt-0.5">Admin Command Portal</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate('/feed')}
+                className="text-xs font-bold text-secondary hover:text-primary bg-card border border-border px-3.5 py-2 rounded-[10px] transition"
+              >
+                ← Return to Sabha Floor
+              </button>
+              <button
+                onClick={() => { logout(); navigate('/'); }}
+                className="text-xs font-bold text-red-500 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 px-3.5 py-2 rounded-[10px] transition"
+              >
+                Logout Speaker
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-8 py-6">
+          {children}
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-primary flex justify-center selection:bg-[#9A6B32] selection:text-white transition-colors duration-200">

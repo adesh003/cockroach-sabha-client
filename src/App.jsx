@@ -36,6 +36,31 @@ function RouteLoadingFallback() {
   );
 }
 
+import posthog from 'posthog-js';
+
+// Initialize PostHog Privacy Analytics only when a valid environment key is supplied
+const posthogKey = import.meta.env.VITE_POSTHOG_KEY;
+if (typeof window !== 'undefined' && posthogKey && posthogKey.startsWith('phc_')) {
+  try {
+    posthog.init(posthogKey, {
+      api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
+      autocapture: true,
+      capture_pageview: true,
+      persistence: 'localStorage',
+    });
+  } catch (e) {
+    console.warn('PostHog initialization skipped:', e);
+  }
+}
+
+function AdminProtectedRoute({ children }) {
+  const { user, isAdmin } = useAuth();
+  if (!user || !isAdmin) {
+    return <Navigate to="/auth" replace />;
+  }
+  return children;
+}
+
 function AppRoutes({ setIsCreateOpen, onOpenGazetteStudio, selectedCategory, setSelectedCategory }) {
   return (
     <Suspense fallback={<RouteLoadingFallback />}>
@@ -53,7 +78,15 @@ function AppRoutes({ setIsCreateOpen, onOpenGazetteStudio, selectedCategory, set
         />
         <Route path="/posts/:id" element={<PostDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        {/* DEDICATED SEPARATE ADMIN ROUTE - STRICTLY PROTECTED */}
+        <Route 
+          path="/admin" 
+          element={
+            <AdminProtectedRoute>
+              <AdminPage />
+            </AdminProtectedRoute>
+          } 
+        />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -65,7 +98,7 @@ function AppContent({ isCreateOpen, setIsCreateOpen, selectedCategory, setSelect
   const { theme } = useTheme();
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Toaster theme={theme} position="top-right" richColors />
       <Layout
         onOpenCreatePost={() => setIsCreateOpen(true)}
