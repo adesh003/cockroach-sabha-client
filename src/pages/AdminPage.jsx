@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, CheckCircle, XCircle, Trash2, Ban, RefreshCw, BarChart3 } from 'lucide-react';
+import { ShieldAlert, CheckCircle, XCircle, Trash2, Ban, RefreshCw, BarChart3, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 import ErrorState from '../components/ErrorState';
 
@@ -297,6 +297,37 @@ export default function AdminPage() {
               <span className="text-[10px] font-mono text-muted uppercase font-bold tracking-wider">Unique Visitors</span>
               <p className="text-3xl font-black text-bronze">{stats?.uniqueVisitors ?? 0}</p>
             </div>
+          </div>
+
+          {/* LIVE PROTESTER CITIES & LOCATION TRACKER */}
+          <div className="bg-card border-2 border-red-500/30 rounded-[16px] p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <div className="flex items-center gap-2">
+                <MapPin size={18} className="text-red-500 animate-bounce" />
+                <h3 className="font-extrabold text-sm uppercase text-primary tracking-wider">Live City & Location Breakdown</h3>
+              </div>
+              <span className="text-[10px] font-mono font-black text-red-500 bg-red-500/10 px-2.5 py-1 rounded-full border border-red-500/20 uppercase tracking-widest">
+                Real-Time IP Geolocation
+              </span>
+            </div>
+
+            {!stats || !stats.locationBreakdown || stats.locationBreakdown.length === 0 ? (
+              <p className="text-xs text-muted text-center py-4">No location traffic recorded yet.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {stats.locationBreakdown.map((item, idx) => (
+                  <div key={idx} className="p-3 bg-background border border-border rounded-[12px] flex items-center justify-between shadow-xs hover:border-red-500 transition">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base">📍</span>
+                      <span className="font-bold text-xs text-primary">{item.city}</span>
+                    </div>
+                    <span className="font-mono font-black text-xs text-red-500 bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">
+                      {item.count} Cards
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* API Endpoints Hits breakdown list */}
