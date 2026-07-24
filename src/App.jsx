@@ -7,6 +7,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './layouts/Layout';
 import CreatePostModal from './components/CreatePostModal';
 
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+
 // Code Splitting & Dynamic Route Lazy Loading for Production Performance
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const FeedPage = lazy(() => import('./pages/FeedPage'));
@@ -58,6 +60,34 @@ function AppRoutes({ setIsCreateOpen, onOpenGazetteStudio, selectedCategory, set
   );
 }
 
+function AppContent({ isCreateOpen, setIsCreateOpen, selectedCategory, setSelectedCategory }) {
+  const { theme } = useTheme();
+
+  return (
+    <BrowserRouter>
+      <Toaster theme={theme} position="top-right" richColors />
+      <Layout 
+        onOpenCreatePost={() => setIsCreateOpen(true)}
+        selectedCategory={selectedCategory}
+        onSelectCategory={(cat) => setSelectedCategory(cat)}
+      >
+        <AppRoutes 
+          setIsCreateOpen={setIsCreateOpen}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </Layout>
+      <CreatePostModal
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+        onPostCreated={() => {
+          window.location.reload();
+        }}
+      />
+    </BrowserRouter>
+  );
+}
+
 export default function App() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -66,27 +96,14 @@ export default function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <BrowserRouter>
-            <Toaster theme="dark" position="top-right" richColors />
-            <Layout 
-              onOpenCreatePost={() => setIsCreateOpen(true)}
-              selectedCategory={selectedCategory}
-              onSelectCategory={(cat) => setSelectedCategory(cat)}
-            >
-              <AppRoutes 
-                setIsCreateOpen={setIsCreateOpen}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-              />
-            </Layout>
-            <CreatePostModal
-              isOpen={isCreateOpen}
-              onClose={() => setIsCreateOpen(false)}
-              onPostCreated={() => {
-                window.location.reload();
-              }}
+          <ThemeProvider>
+            <AppContent 
+              isCreateOpen={isCreateOpen} 
+              setIsCreateOpen={setIsCreateOpen} 
+              selectedCategory={selectedCategory} 
+              setSelectedCategory={setSelectedCategory} 
             />
-          </BrowserRouter>
+          </ThemeProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>

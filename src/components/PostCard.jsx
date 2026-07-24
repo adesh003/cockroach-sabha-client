@@ -103,22 +103,22 @@ export default function PostCard({ post, onReportSubmitted, onDelete }) {
         onClick={() => {
           navigate(`/posts/${post.id}`);
         }}
-        className="bg-[#171717] border border-[#292929] rounded-[12px] p-5 hover:border-[#9A6B32]/60 transition cursor-pointer space-y-3 shadow-sm text-left"
+        className="bg-card border border-border rounded-[12px] p-5 hover:border-bronze/60 transition cursor-pointer space-y-3 shadow-sm text-left"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#0B0B0B] border border-[#9A6B32]/40 flex items-center justify-center font-bold text-xs text-white">
+            <div className="w-8 h-8 rounded-full bg-background border border-bronze/40 flex items-center justify-center font-bold text-xs text-primary">
               🪳
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-xs text-white">{post.user?.anonymousName || 'Delegate Cockroach'}</span>
-                <span className="text-[10px] bg-[#0B0B0B] text-[#9A6B32] border border-[#9A6B32]/30 px-2 py-0.5 rounded-full font-mono">
+                <span className="font-bold text-xs text-primary">{post.user?.anonymousName || 'Delegate Cockroach'}</span>
+                <span className="text-[10px] bg-background text-bronze border border-bronze/30 px-2 py-0.5 rounded-full font-mono">
                   {post.category}
                 </span>
               </div>
               {post.college && (
-                <div className="flex items-center gap-1 text-[11px] text-[#71717A] mt-0.5">
+                <div className="flex items-center gap-1 text-[11px] text-muted mt-0.5">
                   <Building size={11} />
                   <span>{post.college}</span>
                 </div>
@@ -127,13 +127,13 @@ export default function PostCard({ post, onReportSubmitted, onDelete }) {
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-[#71717A] font-mono">{formattedDate}</span>
+            <span className="text-[10px] text-muted font-mono">{formattedDate}</span>
             {/* SUBTLE UN-OBVIOUS TRASH ICON IN TOP-RIGHT FOR AUTHOR OR ADMIN */}
             {user && (user.id === post.userId || user.id === post.user?.id || user.role === 'ADMIN') && (
               <button
                 onClick={handleDeleteClick}
                 title="Delete Motion"
-                className="text-[#71717A] hover:text-red-400 p-1.5 rounded-md hover:bg-[#0B0B0B] transition"
+                className="text-muted hover:text-red-400 p-1.5 rounded-md hover:bg-background transition"
               >
                 <Trash2 size={13} />
               </button>
@@ -141,23 +141,23 @@ export default function PostCard({ post, onReportSubmitted, onDelete }) {
           </div>
         </div>
 
-        <p className="text-xs text-neutral-200 leading-relaxed font-sans font-medium whitespace-pre-wrap">
+        <p className="text-xs text-primary leading-relaxed font-sans font-medium whitespace-pre-wrap">
           {post.content}
         </p>
 
         {post.image && (
-          <div className="rounded-[10px] overflow-hidden border border-[#292929] max-h-60 bg-black flex items-center justify-center">
+          <div className="rounded-[10px] overflow-hidden border border-border max-h-60 bg-background flex items-center justify-center">
             <img src={post.image} alt="Attachment" className="w-full h-auto max-h-60 object-contain rounded-[10px]" />
           </div>
         )}
 
         {/* FOOTER ACTIONS */}
-        <div className="flex items-center justify-between text-xs text-[#71717A] pt-2 border-t border-[#292929]/50">
+        <div className="flex items-center justify-between text-xs text-muted pt-2 border-t border-border/50">
           <div className="flex items-center gap-4">
             <button
               onClick={handleSupport}
               className={`flex items-center gap-1.5 transition ${
-                supported ? 'text-[#9A6B32] font-bold' : 'hover:text-white'
+                supported ? 'text-bronze font-bold' : 'hover:text-primary'
               }`}
             >
               <ThumbsUp size={14} />
@@ -166,7 +166,7 @@ export default function PostCard({ post, onReportSubmitted, onDelete }) {
 
             <button
               onClick={handleCommentClick}
-              className="flex items-center gap-1.5 hover:text-white transition"
+              className="flex items-center gap-1.5 hover:text-primary transition"
             >
               <MessageSquare size={14} />
               <span>{post._count?.comments || 0} Arguments</span>
@@ -179,9 +179,9 @@ export default function PostCard({ post, onReportSubmitted, onDelete }) {
               <button 
                 onClick={(e) => { e.stopPropagation(); setIsGazetteOpen(true); }}
                 title="Share Official Gazette Poster" 
-                className="flex items-center gap-1 hover:text-[#9A6B32] transition text-[11px] font-bold text-white bg-[#0B0B0B] border border-[#9A6B32]/40 px-2.5 py-1 rounded-[6px]"
+                className="flex items-center gap-1 hover:text-bronze transition text-[11px] font-bold text-primary bg-background border border-bronze/40 px-2.5 py-1 rounded-[6px]"
               >
-                <Share2 size={12} className="text-[#9A6B32]" />
+                <Share2 size={12} className="text-bronze" />
                 <span>Share Gazette</span>
               </button>
             )}

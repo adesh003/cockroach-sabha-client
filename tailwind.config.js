@@ -7,16 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0B0B0B',
-        card: '#171717',
-        border: '#292929',
-        primary: '#FFFFFF',
-        secondary: '#A1A1AA',
-        muted: '#71717A',
-        bronze: '#9A6B32',
-        success: '#22C55E',
-        warning: '#F59E0B',
-        danger: '#EF4444',
+        background: 'var(--color-background)',
+        card: 'var(--color-card)',
+        border: 'var(--color-border)',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        muted: 'var(--color-muted)',
+        bronze: 'var(--color-bronze)',
+        success: 'var(--color-success)',
+        warning: 'var(--color-warning)',
+        danger: 'var(--color-danger)',
       },
       borderRadius: {
         card: '12px',

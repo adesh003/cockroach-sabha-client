@@ -157,9 +157,9 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
 
       {/* EXPANDABLE INLINE TWEET-STYLE CREATE MOTION BOX */}
       <div
-        className={`bg-[#171717] border-2 transition-all duration-300 rounded-[18px] p-4 shadow-lg text-left ${isExpanded
-          ? 'border-[#9A6B32] ring-2 ring-[#9A6B32]/30 shadow-[0_0_40px_rgba(154,107,50,0.2)]'
-          : 'border-[#292929] hover:border-[#9A6B32]/80 cursor-pointer'
+        className={`bg-card border-2 transition-all duration-300 rounded-[18px] p-4 shadow-lg text-left ${isExpanded
+          ? 'border-bronze ring-2 ring-bronze/30 shadow-[0_0_40px_rgba(154,107,50,0.2)]'
+          : 'border-border hover:border-bronze/80 cursor-pointer'
           }`}
         onClick={() => {
           if (!isExpanded) setIsExpanded(true);
@@ -169,7 +169,7 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
           <img
             src={user?.avatar || 'https://api.dicebear.com/7.x/identicon/svg?seed=guest'}
             alt="Avatar"
-            className="w-10 h-10 rounded-full bg-[#0B0B0B] border border-[#9A6B32] shrink-0"
+            className="w-10 h-10 rounded-full bg-background border border-bronze shrink-0"
           />
 
           <div className="flex-1 space-y-3">
@@ -180,12 +180,12 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
               onPaste={handlePaste}
               placeholder="What's your rant or motion, Delegate? (Tip: You can paste images directly with Ctrl+V)"
               rows={isExpanded ? 4 : 1}
-              className="w-full bg-transparent text-sm text-white placeholder-[#71717A] focus:outline-none resize-none font-sans leading-relaxed"
+              className="w-full bg-transparent text-sm text-primary placeholder-muted focus:outline-none resize-none font-sans leading-relaxed"
             />
 
             {/* ATTACHED IMAGE PREVIEW */}
             {imagePreview && (
-              <div className="relative rounded-[12px] overflow-hidden border border-[#292929] bg-[#0B0B0B] max-h-48 flex items-center justify-center">
+              <div className="relative rounded-[12px] overflow-hidden border border-border bg-background max-h-48 flex items-center justify-center">
                 <img src={imagePreview} alt="Preview" className="w-full h-auto max-h-48 object-contain rounded-[12px]" />
                 <button
                   type="button"
@@ -202,19 +202,19 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
 
             {/* EXPANDED CONTROLS & OPTIONS */}
             {isExpanded ? (
-              <div className="space-y-3 border-t border-[#292929] pt-3 animate-fadeIn">
+              <div className="space-y-3 border-t border-border pt-3 animate-fadeIn">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div>
-                    <label className="block text-[10px] font-bold uppercase text-[#9A6B32] mb-1 font-mono">
+                    <label className="block text-[10px] font-bold uppercase text-bronze mb-1 font-mono">
                       Select Committee
                     </label>
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[8px] p-2 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+                      className="w-full bg-background border border-border rounded-[8px] p-2 text-xs text-primary focus:outline-none focus:border-bronze"
                     >
                       {categories.map((cat) => (
-                        <option key={cat} value={cat}>
+                        <option key={cat} value={cat} className="bg-card text-primary">
                           {cat}
                         </option>
                       ))}
@@ -222,20 +222,9 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold uppercase text-[#9A6B32] mb-1 font-mono">
+                    <label className="block text-[10px] font-bold uppercase text-bronze mb-1 font-mono">
                       Parliamentary House / Bench
                     </label>
-                    {/* <select
-                      value={college}
-                      onChange={(e) => setCollege(e.target.value)}
-                      className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[8px] p-2 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
-                    >
-                      {politicalHouses.map((h) => (
-                        <option key={h} value={h}>
-                          {h}
-                        </option>
-                      ))}
-                    </select> */}
                   </div>
                 </div>
 
@@ -254,12 +243,12 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
                         e.stopPropagation();
                         fileInputRef.current?.click();
                       }}
-                      className="flex items-center gap-1.5 text-xs text-[#9A6B32] hover:text-white bg-[#0B0B0B] border border-[#9A6B32]/40 px-3 py-1.5 rounded-[8px] transition font-bold"
+                      className="flex items-center gap-1.5 text-xs text-bronze hover:text-primary bg-background border border-bronze/40 px-3 py-1.5 rounded-[8px] transition font-bold"
                     >
                       <ImageIcon size={14} />
                       <span>Attach Photo</span>
                     </button>
-                    <span className="text-[10px] text-[#71717A] font-mono hidden sm:inline">• 100% Anonymous</span>
+                    <span className="text-[10px] text-muted font-mono hidden sm:inline">• 100% Anonymous</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -269,7 +258,7 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
                         e.stopPropagation();
                         setIsExpanded(false);
                       }}
-                      className="text-xs text-[#71717A] hover:text-white px-3 py-1.5 rounded-[8px]"
+                      className="text-xs text-muted hover:text-primary px-3 py-1.5 rounded-[8px]"
                     >
                       Cancel
                     </button>
@@ -278,7 +267,7 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
                       type="button"
                       onClick={handleInlineSubmit}
                       disabled={submitting || !content.trim()}
-                      className="bg-white text-black font-black text-xs px-5 py-1.5 rounded-[9px] hover:bg-neutral-200 transition border border-[#9A6B32] shadow-md disabled:opacity-50 flex items-center gap-1.5"
+                      className="bg-primary text-background font-black text-xs px-5 py-1.5 rounded-[9px] hover:opacity-90 transition border border-bronze shadow-md disabled:opacity-50 flex items-center gap-1.5"
                     >
                       <Send size={13} />
                       <span>{submitting ? 'Submitting...' : 'Raise Motion'}</span>
@@ -287,10 +276,10 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between border-t border-[#292929] pt-2.5">
-                <div className="flex items-center gap-2 text-xs text-[#9A6B32] font-mono font-bold">
+              <div className="flex items-center justify-between border-t border-border pt-2.5">
+                <div className="flex items-center gap-2 text-xs text-bronze font-mono font-bold">
                   <span>➕ Attach Image</span>
-                  <span className="text-[#71717A] font-normal">• 100% Anonymous</span>
+                  <span className="text-muted font-normal">• 100% Anonymous</span>
                 </div>
                 <button
                   type="button"
@@ -298,7 +287,7 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
                     e.stopPropagation();
                     setIsExpanded(true);
                   }}
-                  className="bg-white text-black font-black text-xs px-4 py-1.5 rounded-[9px] hover:bg-neutral-200 transition border border-[#9A6B32]"
+                  className="bg-primary text-background font-black text-xs px-4 py-1.5 rounded-[9px] hover:opacity-90 transition border border-bronze"
                 >
                   Raise Motion
                 </button>
@@ -309,29 +298,29 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
       </div>
 
       {/* COMMITTEE HEADER */}
-      <div className="flex items-center justify-between border-b border-[#292929] pb-3">
+      <div className="flex items-center justify-between border-b border-border pb-3">
         <div className="flex items-center gap-2">
           <span className="text-xl">🏛</span>
           <div>
-            <h1 className="text-base font-black tracking-tight text-white uppercase leading-none">Sabha Floor</h1>
-            <p className="text-[11px] text-[#9A6B32] font-mono mt-1 font-bold">
+            <h1 className="text-base font-black tracking-tight text-primary uppercase leading-none">Sabha Floor</h1>
+            <p className="text-[11px] text-bronze font-mono mt-1 font-bold">
               {selectedCategory === 'All' ? 'All Motions & Debates' : `Committee: ${selectedCategory}`}
             </p>
           </div>
         </div>
-        <span className="text-xs text-[#71717A] font-mono">{posts.length} Motions</span>
+        <span className="text-xs text-muted font-mono">{posts.length} Motions</span>
       </div>
 
       {/* FEED CONTENT */}
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-[#171717] border border-[#292929] rounded-[12px] p-5 space-y-3 animate-pulse">
+            <div key={i} className="bg-card border border-border rounded-[12px] p-5 space-y-3 animate-pulse">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-[#292929]"></div>
-                <div className="h-4 bg-[#292929] rounded w-1/3"></div>
+                <div className="w-8 h-8 rounded-full bg-border"></div>
+                <div className="h-4 bg-border rounded w-1/3"></div>
               </div>
-              <div className="h-12 bg-[#292929] rounded w-full"></div>
+              <div className="h-12 bg-border rounded w-full"></div>
             </div>
           ))}
         </div>
@@ -343,12 +332,12 @@ export default function FeedPage({ onOpenCreatePost, selectedCategory = 'All' })
           showHomeButton={false}
         />
       ) : posts.length === 0 ? (
-        <div className="text-center py-12 bg-[#171717] border border-[#292929] rounded-[12px] p-6 space-y-3">
+        <div className="text-center py-12 bg-card border border-border rounded-[12px] p-6 space-y-3">
           <div className="text-3xl mb-1">🪳</div>
-          <p className="text-[#A1A1AA] text-sm font-medium">No motions raised in this committee yet.</p>
+          <p className="text-secondary text-sm font-medium">No motions raised in this committee yet.</p>
           <button
             onClick={() => setIsExpanded(true)}
-            className="text-xs text-[#9A6B32] font-bold underline hover:text-white transition"
+            className="text-xs text-bronze font-bold underline hover:text-primary transition"
           >
             Be the first delegate to raise a motion →
           </button>

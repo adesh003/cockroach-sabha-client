@@ -1,3 +1,17 @@
+:root {
+  /* Light mode (Luxury warm paper aesthetic) by default */
+  --color-background: #FBFBF9;
+  --color-card: #FFFFFF;
+  --color-border: #E6E4DF;
+  --color-primary: #1C1917;
+  --color-secondary: #57534E;
+  --color-muted: #A8A29E;
+  --color-bronze: #9A6B32;
+  --color-success: #15803D;
+  --color-warning: #B45309;
+  --color-danger: #B91C1C;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,7 +19,7 @@
 @layer base {
   body {
     font-family: 'Outfit', 'Inter', sans-serif;
-    @apply bg-background text-primary antialiased selection:bg-[#9A6B32] selection:text-white;
+    @apply bg-background text-primary antialiased selection:bg-[#9A6B32] selection:text-white transition-colors duration-200;
   }
   
   h1, h2, h3, h4, h5, h6, .font-heading {
@@ -19,12 +33,12 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0B0B;
+  background: var(--color-background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A2A2A;
+  background: var(--color-border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #404040;
+  background: var(--color-secondary);
 }

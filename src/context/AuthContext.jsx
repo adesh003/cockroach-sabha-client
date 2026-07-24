@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -8,6 +8,33 @@ export const AuthProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : null;
   });
   const [token, setToken] = useState(() => localStorage.getItem('unfiltered_token'));
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('unfiltered_user');
+    localStorage.removeItem('unfiltered_token');
+  };
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch('/api/users/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!res.ok) {
+          // Token is invalid/expired (e.g. server restart in dev)
+          logout();
+        }
+      } catch (err) {
+        // Ignore network errors to avoid logging out when offline
+      }
+    };
+    verifyToken();
+  }, [token]);
 
   const login = async (email, college = '', password = '', username = '') => {
     try {
@@ -29,13 +56,6 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       return { success: false, error: 'Connection failed' };
     }
-  };
-
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('unfiltered_user');
-    localStorage.removeItem('unfiltered_token');
   };
 
   return (

@@ -102,42 +102,42 @@ export default function AdminPage() {
 
   return (
     <div className="p-4 space-y-6 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between border-b border-[#292929] pb-4">
+      <div className="flex items-center justify-between border-b border-border pb-4">
         <div>
-          <h1 className="text-lg font-black uppercase text-white flex items-center gap-2">
-            <ShieldAlert size={20} className="text-[#9A6B32]" />
+          <h1 className="text-lg font-black uppercase text-primary flex items-center gap-2">
+            <ShieldAlert size={20} className="text-bronze" />
             <span>Speaker's Office</span>
           </h1>
-          <p className="text-xs text-[#71717A]">Manage pending motions, ethics objections, and delegates.</p>
+          <p className="text-xs text-muted">Manage pending motions, ethics objections, and delegates.</p>
         </div>
-        <button onClick={fetchAdminData} className="p-2 border border-[#292929] rounded-[8px] text-xs text-[#A1A1AA] hover:text-white">
+        <button onClick={fetchAdminData} className="p-2 border border-border bg-card rounded-[8px] text-xs text-secondary hover:text-primary transition-colors">
           <RefreshCw size={14} />
         </button>
       </div>
 
       {/* ADMIN TABS */}
-      <div className="flex items-center gap-2 border-b border-[#292929] pb-2 text-xs">
+      <div className="flex items-center gap-2 border-b border-border pb-2 text-xs">
         <button
           onClick={() => setActiveTab('dashboard')}
-          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'dashboard' ? 'bg-white text-black' : 'text-[#A1A1AA] hover:text-white'}`}
+          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'dashboard' ? 'bg-primary text-background' : 'text-secondary hover:text-primary'}`}
         >
           All Motions ({allPosts.length})
         </button>
         <button
           onClick={() => setActiveTab('pending')}
-          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'pending' ? 'bg-white text-black' : 'text-[#A1A1AA] hover:text-white'}`}
+          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'pending' ? 'bg-primary text-background' : 'text-secondary hover:text-primary'}`}
         >
           Pending Motions ({pendingPosts.length})
         </button>
         <button
           onClick={() => setActiveTab('reports')}
-          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'reports' ? 'bg-white text-black' : 'text-[#A1A1AA] hover:text-white'}`}
+          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'reports' ? 'bg-primary text-background' : 'text-secondary hover:text-primary'}`}
         >
           Ethics Objections ({reports.length})
         </button>
         <button
           onClick={() => setActiveTab('users')}
-          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'users' ? 'bg-white text-black' : 'text-[#A1A1AA] hover:text-white'}`}
+          className={`px-3 py-1.5 rounded-[8px] font-semibold transition ${activeTab === 'users' ? 'bg-primary text-background' : 'text-secondary hover:text-primary'}`}
         >
           Delegates ({users.length})
         </button>
@@ -147,18 +147,18 @@ export default function AdminPage() {
       {activeTab === 'pending' && (
         <div className="space-y-3">
           {pendingPosts.length === 0 ? (
-            <div className="bg-[#171717] border border-[#292929] rounded-[12px] p-8 text-center text-xs text-[#71717A]">
+            <div className="bg-card border border-border rounded-[12px] p-8 text-center text-xs text-muted">
               No motions pending review.
             </div>
           ) : (
             pendingPosts.map((post) => (
-              <div key={post.id} className="bg-[#171717] border border-[#292929] rounded-[12px] p-4 space-y-3">
+              <div key={post.id} className="bg-card border border-border rounded-[12px] p-4 space-y-3">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-white">🪳 {post.user?.anonymousName}</span>
+                  <span className="font-bold text-primary">🪳 {post.user?.anonymousName}</span>
                   <span className="text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded font-mono text-[10px]">PENDING REVIEW</span>
                 </div>
-                <p className="text-xs text-neutral-200">{post.content}</p>
-                <div className="flex justify-end gap-2 border-t border-[#292929] pt-2">
+                <p className="text-xs text-secondary">{post.content}</p>
+                <div className="flex justify-end gap-2 border-t border-border pt-2">
                   <button
                     onClick={() => handleUpdateStatus(post.id, 'APPROVED')}
                     className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-[6px] text-xs flex items-center gap-1 font-semibold hover:bg-emerald-500/30"
@@ -191,10 +191,10 @@ export default function AdminPage() {
       {activeTab === 'dashboard' && (
         <div className="space-y-3">
           {allPosts.map((post) => (
-            <div key={post.id} className="bg-[#171717] border border-[#292929] rounded-[12px] p-4 flex items-center justify-between text-xs">
+            <div key={post.id} className="bg-card border border-border rounded-[12px] p-4 flex items-center justify-between text-xs">
               <div className="space-y-1 max-w-md">
-                <span className="font-bold text-white">🪳 {post.user?.anonymousName}</span>
-                <p className="text-[#A1A1AA] truncate">{post.content}</p>
+                <span className="font-bold text-primary">🪳 {post.user?.anonymousName}</span>
+                <p className="text-secondary truncate">{post.content}</p>
               </div>
               <div className="flex items-center gap-2">
                 <span className={`px-2 py-0.5 rounded text-[10px] ${post.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
@@ -213,17 +213,17 @@ export default function AdminPage() {
       {activeTab === 'reports' && (
         <div className="space-y-3">
           {reports.length === 0 ? (
-            <div className="bg-[#171717] border border-[#292929] rounded-[12px] p-8 text-center text-xs text-[#71717A]">
+            <div className="bg-card border border-border rounded-[12px] p-8 text-center text-xs text-muted">
               No ethics objections filed.
             </div>
           ) : (
             reports.map((report) => (
-              <div key={report.id} className="bg-[#171717] border border-[#292929] rounded-[12px] p-4 space-y-2 text-xs">
+              <div key={report.id} className="bg-card border border-border rounded-[12px] p-4 space-y-2 text-xs">
                 <div className="flex justify-between">
                   <span className="text-red-400 font-bold">Objection Reason: {report.reason}</span>
-                  <span className="text-[#71717A]">Filed by: 🪳 {report.user?.anonymousName}</span>
+                  <span className="text-muted">Filed by: 🪳 {report.user?.anonymousName}</span>
                 </div>
-                <p className="text-[#A1A1AA] bg-[#0B0B0B] p-2.5 rounded-[8px] border border-[#292929]">{report.post?.content}</p>
+                <p className="text-secondary bg-background p-2.5 rounded-[8px] border border-border">{report.post?.content}</p>
                 <div className="flex justify-end gap-2 pt-1">
                   <button onClick={() => handleDeletePost(report.postId)} className="bg-red-500/20 text-red-400 px-3 py-1 rounded-[6px] text-xs">
                     Delete Motion
@@ -239,10 +239,10 @@ export default function AdminPage() {
       {activeTab === 'users' && (
         <div className="space-y-3">
           {users.map((u) => (
-            <div key={u.id} className="bg-[#171717] border border-[#292929] rounded-[12px] p-4 flex items-center justify-between text-xs">
+            <div key={u.id} className="bg-card border border-border rounded-[12px] p-4 flex items-center justify-between text-xs">
               <div>
-                <span className="font-bold text-white">🪳 {u.anonymousName}</span>
-                <p className="text-[#71717A]">{u.email}</p>
+                <span className="font-bold text-primary">🪳 {u.anonymousName}</span>
+                <p className="text-muted">{u.email}</p>
               </div>
               <div className="flex items-center gap-2">
                 {u.isBanned ? (

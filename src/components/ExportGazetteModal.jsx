@@ -38,37 +38,37 @@ export default function ExportGazetteModal({ isOpen, onClose, post }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#171717] border-2 border-[#9A6B32] rounded-[22px] w-full max-w-lg p-6 space-y-5 shadow-[0_0_80px_rgba(154,107,50,0.45)] relative text-left">
+      <div className="bg-card border-2 border-bronze rounded-[22px] w-full max-w-lg p-6 space-y-5 shadow-[0_0_80px_rgba(154,107,50,0.45)] relative text-left">
         
         {/* MODAL HEADER WITH THEME TOGGLE */}
-        <div className="flex items-center justify-between border-b border-[#292929] pb-4">
+        <div className="flex items-center justify-between border-b border-border pb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#0B0B0B] border border-[#9A6B32] flex items-center justify-center text-[#9A6B32] shadow-inner">
+            <div className="w-9 h-9 rounded-xl bg-background border border-bronze flex items-center justify-center text-bronze shadow-inner">
               <Share2 size={17} />
             </div>
             <div>
-              <h3 className="font-black text-sm uppercase tracking-wider text-white">Parliamentary Gazette Poster</h3>
-              <p className="text-[10px] text-[#9A6B32] font-mono font-bold">Official Document for X, WhatsApp & Instagram Stories</p>
+              <h3 className="font-black text-sm uppercase tracking-wider text-primary">Parliamentary Gazette Poster</h3>
+              <p className="text-[10px] text-bronze font-mono font-bold">Official Document for X, WhatsApp & Instagram Stories</p>
             </div>
           </div>
           <button 
             onClick={onClose} 
-            className="text-[#71717A] hover:text-white p-1.5 rounded-full hover:bg-[#292929] transition"
+            className="text-muted hover:text-primary p-1.5 rounded-full hover:bg-background transition"
           >
             <X size={20} />
           </button>
         </div>
 
         {/* POSTER STYLE TOGGLE BUTTONS */}
-        <div className="flex items-center justify-between text-xs bg-[#0B0B0B] p-1.5 rounded-[12px] border border-[#292929]">
-          <span className="text-[10px] font-mono text-[#71717A] pl-2 uppercase font-bold">Gazette Theme:</span>
+        <div className="flex items-center justify-between text-xs bg-background p-1.5 rounded-[12px] border border-border">
+          <span className="text-[10px] font-mono text-muted pl-2 uppercase font-bold">Gazette Theme:</span>
           <div className="flex gap-1">
             <button
               onClick={() => setThemeMode('dark')}
               className={`px-3 py-1 rounded-[8px] font-bold text-[11px] transition ${
                 themeMode === 'dark'
-                  ? 'bg-[#9A6B32] text-white shadow-sm'
-                  : 'text-[#A1A1AA] hover:text-white'
+                  ? 'bg-bronze text-white shadow-sm'
+                  : 'text-secondary hover:text-primary'
               }`}
             >
               👑 Imperial Gold
@@ -77,8 +77,8 @@ export default function ExportGazetteModal({ isOpen, onClose, post }) {
               onClick={() => setThemeMode('monochrome')}
               className={`px-3 py-1 rounded-[8px] font-bold text-[11px] transition ${
                 themeMode === 'monochrome'
-                  ? 'bg-neutral-200 text-black shadow-sm'
-                  : 'text-[#A1A1AA] hover:text-white'
+                  ? 'bg-primary text-background shadow-sm'
+                  : 'text-secondary hover:text-primary'
               }`}
             >
               🏛 Silver Brutalist
@@ -217,11 +217,11 @@ export default function ExportGazetteModal({ isOpen, onClose, post }) {
         </div>
 
         {/* ACTION BUTTONS */}
-        <div className="flex justify-end gap-3 pt-3 border-t border-[#292929]">
+        <div className="flex justify-end gap-3 pt-3 border-t border-border">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-[10px] text-xs font-bold border border-[#292929] text-[#A1A1AA] hover:text-white hover:bg-[#292929] transition"
+            className="px-4 py-2.5 rounded-[10px] text-xs font-bold border border-border text-secondary hover:text-primary hover:bg-background transition"
           >
             Close
           </button>
@@ -229,7 +229,7 @@ export default function ExportGazetteModal({ isOpen, onClose, post }) {
             type="button"
             onClick={handleDownload}
             disabled={downloading}
-            className="px-6 py-2.5 rounded-[10px] text-xs font-black bg-white text-black hover:bg-neutral-200 transition flex items-center gap-2 border border-[#9A6B32] shadow-xl disabled:opacity-50"
+            className="px-6 py-2.5 rounded-[10px] text-xs font-black bg-primary text-background hover:opacity-90 transition flex items-center gap-2 border border-bronze shadow-xl disabled:opacity-50"
           >
             <Download size={15} />
             <span>{downloading ? 'Generating Ultra-HD PNG...' : 'Download Gazette PNG'}</span>

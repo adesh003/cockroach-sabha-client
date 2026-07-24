@@ -56,6 +56,26 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
     reader.readAsDataURL(file);
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    processImageFile(file);
+  };
+
+  const handlePaste = (e) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        const blob = items[i].getAsFile();
+        if (blob) {
+          e.preventDefault();
+          processImageFile(blob);
+          break;
+        }
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -106,16 +126,16 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4">
-      <div className="bg-[#171717] border border-[#292929] rounded-[12px] w-full max-w-2xl p-6 space-y-5 shadow-2xl relative">
-        <div className="flex items-center justify-between border-b border-[#292929] pb-3">
+      <div className="bg-card border border-border rounded-[12px] w-full max-w-2xl p-6 space-y-5 shadow-2xl relative">
+        <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
             <span className="text-lg">🪳</span>
             <div>
-              <h3 className="font-extrabold text-sm text-white uppercase tracking-wider">Raise New Motion</h3>
-              <p className="text-[11px] text-[#71717A]">Posting as <span className="text-[#9A6B32] font-semibold">{user?.anonymousName || 'Delegate'}</span></p>
+              <h3 className="font-extrabold text-sm text-primary uppercase tracking-wider">Raise New Motion</h3>
+              <p className="text-[11px] text-muted">Posting as <span className="text-bronze font-semibold">{user?.anonymousName || 'Delegate'}</span></p>
             </div>
           </div>
-          <button onClick={onClose} className="text-[#71717A] hover:text-white p-1">
+          <button onClick={onClose} className="text-muted hover:text-primary p-1">
             <X size={18} />
           </button>
         </div>
@@ -129,29 +149,29 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
               placeholder="State your motion clearly for the Sabha Floor..."
               maxLength={300}
               rows={6}
-              className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-4 text-sm text-white placeholder-[#71717A] focus:outline-none focus:border-[#9A6B32] resize-none leading-relaxed"
+              className="w-full bg-background border border-border rounded-[10px] p-4 text-sm text-primary placeholder-muted focus:outline-none focus:border-bronze resize-none leading-relaxed"
             />
-            <div className="absolute bottom-3 right-3 text-xs text-[#71717A]">
+            <div className="absolute bottom-3 right-3 text-xs text-muted">
               <span className={content.length >= 280 ? 'text-red-400 font-bold' : ''}>{content.length}</span>/300
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase text-[#A1A1AA] mb-1.5">Select Committee</label>
+            <label className="block text-xs font-semibold uppercase text-secondary mb-1.5">Select Committee</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-3 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+              className="w-full bg-background border border-border rounded-[10px] p-3 text-xs text-primary focus:outline-none focus:border-bronze"
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
+                <option key={cat} value={cat} className="bg-card text-primary">{cat}</option>
               ))}
             </select>
           </div>
 
           {/* IMAGE UPLOAD WITH LARGE POSTER BOX */}
           <div>
-            <label className="block text-xs font-semibold uppercase text-[#A1A1AA] mb-1.5">Attach Poster / Image</label>
+            <label className="block text-xs font-semibold uppercase text-secondary mb-1.5">Attach Poster / Image</label>
             <input
               type="file"
               ref={fileInputRef}
@@ -161,7 +181,7 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
             />
 
             {imageUrl ? (
-              <div className="relative rounded-[10px] overflow-hidden border border-[#292929] h-56 bg-[#0B0B0B] flex items-center justify-center">
+              <div className="relative rounded-[10px] overflow-hidden border border-border h-56 bg-background flex items-center justify-center">
                 <img src={imageUrl} alt="Attached Poster" className="w-full h-full object-contain" />
                 <button
                   type="button"
@@ -175,29 +195,29 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full h-40 bg-[#0B0B0B] border border-dashed border-[#292929] hover:border-[#9A6B32] rounded-[10px] p-6 flex flex-col items-center justify-center gap-2 text-xs text-[#A1A1AA] transition group"
+                className="w-full h-40 bg-background border border-dashed border-border hover:border-bronze rounded-[10px] p-6 flex flex-col items-center justify-center gap-2 text-xs text-secondary transition group"
               >
-                <div className="w-10 h-10 rounded-full bg-[#171717] border border-[#292929] flex items-center justify-center group-hover:border-[#9A6B32] text-white">
+                <div className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center group-hover:border-bronze text-primary">
                   <Plus size={20} />
                 </div>
-                <span className="font-semibold text-white">Click plus button to attach Poster / Image</span>
-                <span className="text-[10px] text-[#71717A]">Automatic WebP compression applied (Max 10MB)</span>
+                <span className="font-semibold text-primary">Click plus button to attach Poster / Image</span>
+                <span className="text-[10px] text-muted">Automatic WebP compression applied (Max 10MB)</span>
               </button>
             )}
           </div>
 
-          <div className="flex justify-end gap-2 pt-2 border-t border-[#292929]">
+          <div className="flex justify-end gap-2 pt-2 border-t border-border">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-[10px] text-xs font-semibold border border-[#292929] text-[#A1A1AA] hover:text-white"
+              className="px-4 py-2 rounded-[10px] text-xs font-semibold border border-border text-secondary hover:text-primary hover:bg-background transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || !content.trim()}
-              className="px-4 py-2 rounded-[10px] text-xs font-bold bg-white text-black hover:bg-neutral-200 transition flex items-center gap-2 disabled:opacity-50 border border-[#9A6B32]/40"
+              className="px-4 py-2 rounded-[10px] text-xs font-bold bg-primary text-background hover:opacity-90 transition flex items-center gap-2 disabled:opacity-50 border border-bronze/40"
             >
               <Send size={13} />
               <span>{loading ? 'Submitting...' : 'Raise Motion'}</span>

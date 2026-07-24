@@ -48,30 +48,30 @@ export default function AuthPage() {
   return (
     <div className="p-4 py-12 space-y-6 max-w-md mx-auto text-left">
       <div className="text-center space-y-2">
-        <div className="w-14 h-14 rounded-2xl bg-[#171717] border-2 border-[#9A6B32] text-white font-black flex items-center justify-center text-3xl mx-auto shadow-[0_0_30px_rgba(154,107,50,0.3)]">
+        <div className="w-14 h-14 rounded-2xl bg-card border-2 border-bronze text-primary font-black flex items-center justify-center text-3xl mx-auto shadow-[0_0_30px_rgba(154,107,50,0.3)]">
           🪳
         </div>
-        <h1 className="text-2xl font-black text-white uppercase tracking-wider">
+        <h1 className="text-2xl font-black text-primary uppercase tracking-wider">
           {authMode === 'signup' ? 'Register New Delegate' : 'Existing Delegate Login'}
         </h1>
-        <p className="text-xs text-[#71717A]">
+        <p className="text-xs text-muted">
           {authMode === 'signup'
             ? 'Enter Cockroach Sabha. Your real identity is never exposed.'
             : 'Access your active Delegate Pass & Motions on the Sabha Floor.'}
         </p>
       </div>
 
-      <div className="bg-[#171717] border-2 border-[#9A6B32] rounded-[18px] p-6 space-y-4 shadow-[0_0_40px_rgba(154,107,50,0.25)]">
+      <div className="bg-card border-2 border-bronze rounded-[18px] p-6 space-y-4 shadow-[0_0_40px_rgba(154,107,50,0.25)]">
         
         {/* TOGGLE SWITCH BETWEEN NEW DELEGATE & EXISTING LOGIN */}
-        <div className="grid grid-cols-2 p-1 bg-[#0B0B0B] border border-[#292929] rounded-[10px] text-xs font-bold">
+        <div className="grid grid-cols-2 p-1 bg-background border border-border rounded-[10px] text-xs font-bold">
           <button
             type="button"
             onClick={() => setAuthMode('signup')}
             className={`py-2 rounded-[8px] transition flex items-center justify-center gap-1.5 ${
               authMode === 'signup'
-                ? 'bg-[#9A6B32] text-white shadow-sm font-black'
-                : 'text-[#A1A1AA] hover:text-white'
+                ? 'bg-bronze text-white shadow-sm font-black'
+                : 'text-secondary hover:text-primary'
             }`}
           >
             <UserPlus size={14} />
@@ -82,8 +82,8 @@ export default function AuthPage() {
             onClick={() => setAuthMode('login')}
             className={`py-2 rounded-[8px] transition flex items-center justify-center gap-1.5 ${
               authMode === 'login'
-                ? 'bg-[#9A6B32] text-white shadow-sm font-black'
-                : 'text-[#A1A1AA] hover:text-white'
+                ? 'bg-bronze text-white shadow-sm font-black'
+                : 'text-secondary hover:text-primary'
             }`}
           >
             <LogIn size={14} />
@@ -93,7 +93,7 @@ export default function AuthPage() {
 
         <form onSubmit={handleAuth} className="space-y-4">
           <div>
-            <label className="block text-[10px] font-bold uppercase text-[#A1A1AA] mb-1">Email Address</label>
+            <label className="block text-[10px] font-bold uppercase text-secondary mb-1">Email Address</label>
             <div className="relative">
               <input
                 type="email"
@@ -101,14 +101,14 @@ export default function AuthPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="delegate@parliament.in"
                 required
-                className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 pl-9 text-xs text-white placeholder-[#71717A] focus:outline-none focus:border-[#9A6B32]"
+                className="w-full bg-background border border-border rounded-[10px] p-2.5 pl-9 text-xs text-primary placeholder-muted focus:outline-none focus:border-bronze"
               />
-              <Mail size={14} className="absolute left-3 top-3 text-[#71717A]" />
+              <Mail size={14} className="absolute left-3 top-3 text-muted" />
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase text-[#A1A1AA] mb-1">Password</label>
+            <label className="block text-[11px] font-semibold uppercase text-secondary mb-1">Password</label>
             <div className="relative">
               <input
                 type="password"
@@ -116,16 +116,16 @@ export default function AuthPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 pl-9 text-xs text-white placeholder-[#71717A] focus:outline-none focus:border-[#9A6B32]"
+                className="w-full bg-background border border-border rounded-[10px] p-2.5 pl-9 text-xs text-primary placeholder-muted focus:outline-none focus:border-bronze"
               />
-              <Lock size={14} className="absolute left-3 top-3 text-[#71717A]" />
+              <Lock size={14} className="absolute left-3 top-3 text-muted" />
             </div>
           </div>
 
           {/* CUSTOM HANDLE FILED & SUGGESTIONS ONLY VISIBLE IN SIGNUP MODE */}
           {authMode === 'signup' && (
             <div>
-              <label className="block text-[11px] font-semibold uppercase text-[#A1A1AA] mb-1">
+              <label className="block text-[11px] font-semibold uppercase text-secondary mb-1">
                 Custom Delegate Handle (Optional)
               </label>
               <div className="relative">
@@ -134,21 +134,21 @@ export default function AuthPage() {
                   value={customUsername}
                   onChange={(e) => setCustomUsername(e.target.value)}
                   placeholder="e.g. Backbench MP #402"
-                  className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 pl-9 text-xs text-white placeholder-[#71717A] focus:outline-none focus:border-[#9A6B32]"
+                  className="w-full bg-background border border-border rounded-[10px] p-2.5 pl-9 text-xs text-primary placeholder-muted focus:outline-none focus:border-bronze"
                 />
-                <UserCheck size={14} className="absolute left-3 top-3 text-[#71717A]" />
+                <UserCheck size={14} className="absolute left-3 top-3 text-muted" />
               </div>
 
               {/* USERNAME SUGGESTIONS */}
               <div className="mt-2 space-y-1">
-                <p className="text-[10px] text-[#71717A] font-mono">Suggested Delegate Titles:</p>
+                <p className="text-[10px] text-muted font-mono">Suggested Delegate Titles:</p>
                 <div className="flex flex-wrap gap-1">
                   {usernameSuggestions.slice(0, 4).map((sug) => (
                     <button
                       type="button"
                       key={sug}
                       onClick={() => setCustomUsername(sug + ' #' + Math.floor(100 + Math.random() * 900))}
-                      className="text-[10px] bg-[#0B0B0B] border border-[#292929] text-[#9A6B32] px-2 py-0.5 rounded-full hover:border-[#9A6B32] transition"
+                      className="text-[10px] bg-background border border-border text-bronze px-2 py-0.5 rounded-full hover:border-bronze transition"
                     >
                       {sug}
                     </button>
@@ -159,25 +159,25 @@ export default function AuthPage() {
           )}
 
           <div>
-            <label className="block text-[11px] font-semibold uppercase text-[#A1A1AA] mb-1">Parliament Bench</label>
+            <label className="block text-[11px] font-semibold uppercase text-secondary mb-1">Parliament Bench</label>
             <div className="relative">
               <select
                 value={college}
                 onChange={(e) => setCollege(e.target.value)}
-                className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 pl-9 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+                className="w-full bg-background border border-border rounded-[10px] p-2.5 pl-9 text-xs text-primary focus:outline-none focus:border-bronze"
               >
                 {colleges.map((c) => (
-                  <option key={c} value={c}>{c}</option>
+                  <option key={c} value={c} className="bg-card text-primary">{c}</option>
                 ))}
               </select>
-              <Building size={14} className="absolute left-3 top-3 text-[#71717A]" />
+              <Building size={14} className="absolute left-3 top-3 text-muted" />
             </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-white text-black font-extrabold py-3 px-4 rounded-[10px] transition text-xs flex items-center justify-center gap-2 hover:bg-neutral-200 disabled:opacity-50 border border-[#9A6B32]"
+            className="w-full bg-primary text-background font-extrabold py-3 px-4 rounded-[10px] transition text-xs flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-50 border border-bronze"
           >
             <Lock size={14} />
             <span>

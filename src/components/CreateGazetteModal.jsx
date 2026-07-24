@@ -97,37 +97,37 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#171717] border-2 border-[#9A6B32] rounded-[24px] w-full max-w-4xl p-6 shadow-[0_0_80px_rgba(154,107,50,0.45)] relative text-left grid grid-cols-1 lg:grid-cols-12 gap-6 my-auto">
+      <div className="bg-card border-2 border-bronze rounded-[24px] w-full max-w-4xl p-6 shadow-[0_0_80px_rgba(154,107,50,0.45)] relative text-left grid grid-cols-1 lg:grid-cols-12 gap-6 my-auto">
         
         {/* LEFT COLUMN: CUSTOMIZATION CONTROLS */}
         <div className="lg:col-span-6 space-y-4 max-h-[80vh] overflow-y-auto pr-1">
-          <div className="flex items-center justify-between border-b border-[#292929] pb-3">
+          <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#0B0B0B] border border-[#9A6B32] flex items-center justify-center text-[#9A6B32]">
+              <div className="w-8 h-8 rounded-xl bg-background border border-bronze flex items-center justify-center text-bronze">
                 <Flame size={18} />
               </div>
               <div>
-                <h3 className="font-extrabold text-sm uppercase text-white tracking-wider">Official Gazette Studio</h3>
-                <p className="text-[10px] text-[#9A6B32] font-mono font-bold">Create Viral Social Media Petitions</p>
+                <h3 className="font-extrabold text-sm uppercase text-primary tracking-wider">Official Gazette Studio</h3>
+                <p className="text-[10px] text-bronze font-mono font-bold">Create Viral Social Media Petitions</p>
               </div>
             </div>
-            <button onClick={onClose} className="lg:hidden text-[#71717A] hover:text-white p-1">
+            <button onClick={onClose} className="lg:hidden text-muted hover:text-primary p-1">
               <X size={20} />
             </button>
           </div>
 
           <div className="space-y-3 text-xs">
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#9A6B32] mb-1 font-mono">
+              <label className="block text-[10px] font-bold uppercase text-bronze mb-1 font-mono">
                 1. Select Petition Type / Demands
               </label>
               <select
                 value={petitionType}
                 onChange={(e) => setPetitionType(e.target.value)}
-                className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+                className="w-full bg-background border border-border rounded-[10px] p-2.5 text-xs text-primary focus:outline-none focus:border-bronze"
               >
                 {gazettePetitionTypes.map((p) => (
-                  <option key={p} value={p}>
+                  <option key={p} value={p} className="bg-card text-primary">
                     {p}
                   </option>
                 ))}
@@ -136,7 +136,7 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
 
             {petitionType.includes('Custom') && (
               <div>
-                <label className="block text-[10px] font-bold uppercase text-[#A1A1AA] mb-1">
+                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">
                   Custom Gazette Title / Motion Name
                 </label>
                 <input
@@ -144,13 +144,13 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
                   value={customTitle}
                   onChange={(e) => setCustomTitle(e.target.value)}
                   placeholder="e.g. Demand for Immediate Highway Audit"
-                  className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+                  className="w-full bg-background border border-border rounded-[10px] p-2.5 text-xs text-primary focus:outline-none focus:border-bronze"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#A1A1AA] mb-1">
+              <label className="block text-[10px] font-bold uppercase text-secondary mb-1">
                 2. Statement of Demands / Unfiltered Arguments
               </label>
               <textarea
@@ -158,13 +158,13 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
                 onChange={(e) => setDemandContent(e.target.value)}
                 rows={3}
                 placeholder="State your petition demands clearly..."
-                className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 text-xs text-white focus:outline-none focus:border-[#9A6B32] resize-none"
+                className="w-full bg-background border border-border rounded-[10px] p-2.5 text-xs text-primary focus:outline-none focus:border-bronze resize-none"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[10px] font-bold uppercase text-[#A1A1AA] mb-1">
+                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">
                   Petitioner Handle
                 </label>
                 <input
@@ -172,21 +172,21 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
                   value={delegateTitle}
                   onChange={(e) => setDelegateTitle(e.target.value)}
                   placeholder="e.g. Chief Opposition MP"
-                  className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+                  className="w-full bg-background border border-border rounded-[10px] p-2.5 text-xs text-primary focus:outline-none focus:border-bronze"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold uppercase text-[#A1A1AA] mb-1">
+                <label className="block text-[10px] font-bold uppercase text-secondary mb-1">
                   Parliamentary Stamp Seal
                 </label>
                 <select
                   value={stampType}
                   onChange={(e) => setStampType(e.target.value)}
-                  className="w-full bg-[#0B0B0B] border border-[#292929] rounded-[10px] p-2.5 text-xs text-white focus:outline-none focus:border-[#9A6B32]"
+                  className="w-full bg-background border border-border rounded-[10px] p-2.5 text-xs text-primary focus:outline-none focus:border-bronze"
                 >
                   {gazetteStamps.map((s) => (
-                    <option key={s} value={s}>
+                    <option key={s} value={s} className="bg-card text-primary">
                       {s}
                     </option>
                   ))}
@@ -195,35 +195,35 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#A1A1AA] mb-1">
+              <label className="block text-[10px] font-bold uppercase text-secondary mb-1">
                 3. Poster Theme Palette
               </label>
-              <div className="grid grid-cols-4 gap-1.5 p-1 bg-[#0B0B0B] border border-[#292929] rounded-[10px] text-[11px] font-bold text-center">
+              <div className="grid grid-cols-4 gap-1.5 p-1 bg-background border border-border rounded-[10px] text-[11px] font-bold text-center">
                 <button
                   type="button"
                   onClick={() => setThemeMode('gold')}
-                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'gold' ? 'bg-[#9A6B32] text-white shadow-sm' : 'text-[#A1A1AA]'}`}
+                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'gold' ? 'bg-bronze text-white shadow-sm' : 'text-secondary hover:text-primary'}`}
                 >
                   👑 Imperial
                 </button>
                 <button
                   type="button"
                   onClick={() => setThemeMode('emerald')}
-                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'emerald' ? 'bg-emerald-600 text-white shadow-sm' : 'text-[#A1A1AA]'}`}
+                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'emerald' ? 'bg-emerald-600 text-white shadow-sm' : 'text-secondary hover:text-primary'}`}
                 >
                   🏛 Emerald
                 </button>
                 <button
                   type="button"
                   onClick={() => setThemeMode('crimson')}
-                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'crimson' ? 'bg-red-600 text-white shadow-sm' : 'text-[#A1A1AA]'}`}
+                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'crimson' ? 'bg-red-600 text-white shadow-sm' : 'text-secondary hover:text-primary'}`}
                 >
                   🚨 Crimson
                 </button>
                 <button
                   type="button"
                   onClick={() => setThemeMode('monochrome')}
-                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'monochrome' ? 'bg-white text-black shadow-sm' : 'text-[#A1A1AA]'}`}
+                  className={`py-1.5 rounded-[7px] transition ${themeMode === 'monochrome' ? 'bg-primary text-background shadow-sm' : 'text-secondary hover:text-primary'}`}
                 >
                   📜 Silver
                 </button>
@@ -241,7 +241,7 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full bg-[#0B0B0B] border border-[#9A6B32]/40 text-[#9A6B32] hover:text-white font-bold py-2 rounded-[10px] transition text-xs flex items-center justify-center gap-2"
+                className="w-full bg-background border border-bronze/40 text-bronze hover:bg-card font-bold py-2 rounded-[10px] transition text-xs flex items-center justify-center gap-2"
               >
                 <ImageIcon size={14} />
                 <span>{imagePreview ? 'Change Attached Evidence Photo' : 'Attach Photo Evidence'}</span>
@@ -253,10 +253,10 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
         {/* RIGHT COLUMN: REAL-TIME GAZETTE CANVAS PREVIEW & EXPORT */}
         <div className="lg:col-span-6 flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#9A6B32]">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-bronze">
               LIVE 4K GAZETTE POSTER PREVIEW
             </span>
-            <button onClick={onClose} className="hidden lg:block text-[#71717A] hover:text-white p-1">
+            <button onClick={onClose} className="hidden lg:block text-muted hover:text-primary p-1">
               <X size={20} />
             </button>
           </div>
@@ -341,7 +341,7 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-[10px] text-xs font-bold border border-[#292929] text-[#A1A1AA] hover:text-white hover:bg-[#292929] transition"
+              className="px-4 py-2.5 rounded-[10px] text-xs font-bold border border-border text-secondary hover:text-primary hover:bg-background transition"
             >
               Close Studio
             </button>
@@ -349,7 +349,7 @@ export default function CreateGazetteModal({ isOpen, onClose }) {
               type="button"
               onClick={handleDownload}
               disabled={downloading}
-              className="px-6 py-2.5 rounded-[10px] text-xs font-black bg-white text-black hover:bg-neutral-200 transition flex items-center gap-2 border border-[#9A6B32] shadow-xl disabled:opacity-50"
+              className="px-6 py-2.5 rounded-[10px] text-xs font-black bg-primary text-background hover:opacity-90 transition flex items-center gap-2 border border-bronze shadow-xl disabled:opacity-50"
             >
               <Download size={15} />
               <span>{downloading ? 'Generating Ultra-HD PNG...' : 'Download Gazette PNG'}</span>
