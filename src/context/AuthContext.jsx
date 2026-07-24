@@ -36,12 +36,12 @@ export const AuthProvider = ({ children }) => {
     verifyToken();
   }, [token]);
 
-  const login = async (email, college = '', password = '', username = '') => {
+  const login = async (email, college = '', password = '', username = '', mode = 'register') => {
     try {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, college, password, username }),
+        body: JSON.stringify({ email, college, password, username, mode }),
       });
       const data = await res.json();
       if (res.ok) {

@@ -24,7 +24,7 @@ export default function AuthPage() {
 
     setLoading(true);
     const usernamePayload = authMode === 'signup' ? customUsername : undefined;
-    const res = await login(email, college, password, usernamePayload);
+    const res = await login(email, college, password, usernamePayload, authMode);
     setLoading(false);
 
     if (res.success) {
