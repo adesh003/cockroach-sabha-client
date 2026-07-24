@@ -49,7 +49,43 @@ export const AuthProvider = ({ children }) => {
         setToken(data.token);
         localStorage.setItem('unfiltered_user', JSON.stringify(data.user));
         localStorage.setItem('unfiltered_token', data.token);
-        return { success: true, user: data.user };
+        return { success: true, user: data.user, recoveryKey: data.recoveryKey };
+      } else {
+        return { success: false, error: data.error };
+      }
+    } catch (err) {
+      return { success: false, error: 'Connection failed' };
+    }
+  };
+
+  const requestResetCode = async (email) => {
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, error: data.error };
+      }
+    } catch (err) {
+      return { success: false, error: 'Connection failed' };
+    }
+  };
+
+  const resetPassword = async (email, recoveryKey, code, newPassword) => {
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, recoveryKey, code, newPassword }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        return { success: true, message: data.message };
       } else {
         return { success: false, error: data.error };
       }
@@ -59,7 +95,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAdmin: user?.role === 'ADMIN' }}>
+    <AuthContext.Provider value={{ user, token, login, logout, requestResetCode, resetPassword, isAdmin: user?.role === 'ADMIN' }}>
       {children}
     </AuthContext.Provider>
   );

@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './layouts/Layout';
 import CreatePostModal from './components/CreatePostModal';
+import { Analytics } from '@vercel/analytics/react';
 
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 
@@ -40,15 +41,15 @@ function AppRoutes({ setIsCreateOpen, onOpenGazetteStudio, selectedCategory, set
     <Suspense fallback={<RouteLoadingFallback />}>
       <Routes>
         <Route path="/" element={<LandingPage onOpenGazetteStudio={onOpenGazetteStudio} />} />
-        <Route 
-          path="/feed" 
+        <Route
+          path="/feed"
           element={
-            <FeedPage 
+            <FeedPage
               onOpenCreatePost={() => setIsCreateOpen(true)}
               selectedCategory={selectedCategory}
               onSelectCategory={(cat) => setSelectedCategory(cat)}
             />
-          } 
+          }
         />
         <Route path="/posts/:id" element={<PostDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />
@@ -66,12 +67,12 @@ function AppContent({ isCreateOpen, setIsCreateOpen, selectedCategory, setSelect
   return (
     <BrowserRouter>
       <Toaster theme={theme} position="top-right" richColors />
-      <Layout 
+      <Layout
         onOpenCreatePost={() => setIsCreateOpen(true)}
         selectedCategory={selectedCategory}
         onSelectCategory={(cat) => setSelectedCategory(cat)}
       >
-        <AppRoutes 
+        <AppRoutes
           setIsCreateOpen={setIsCreateOpen}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
@@ -97,12 +98,13 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <ThemeProvider>
-            <AppContent 
-              isCreateOpen={isCreateOpen} 
-              setIsCreateOpen={setIsCreateOpen} 
-              selectedCategory={selectedCategory} 
-              setSelectedCategory={setSelectedCategory} 
+            <AppContent
+              isCreateOpen={isCreateOpen}
+              setIsCreateOpen={setIsCreateOpen}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
             />
+            <Analytics />
           </ThemeProvider>
         </AuthProvider>
       </QueryClientProvider>
